@@ -16,7 +16,7 @@ controls etc.
 	
 	and modified by Giuseppe Callipo-ik8yfw (myself)
 	
-	#### Modification:
+	Modification:
 	
 		* Class refactoring, change some methods visibility;
 		* Filter coefficients calculation included into class;
