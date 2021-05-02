@@ -1,0 +1,33 @@
+How to use it.
+
+Create an audio project based on chipaudette/OpenAudio_ArduinoLibrary
+like the Keiths SDR  Project, and just add the h and cpp file to your 
+processing chain as unique output filter:
+
+************************************************************
+
+1) Include the header
+#include "AudioFilterConvolution_F32.h"
+
+2) Initialize as F32 block 
+(the block must be 128 but the sample rate can be changed but must initialized)
+const float sample_rate_Hz = 96000.0f; // or 44100.0f or other
+const int   audio_block_samples = 128;
+AudioSettings_F32 audio_settings(sample_rate_Hz, audio_block_samples);
+
+AudioFilterConvolution_F32 FilterConv(audio_settings);
+
+3) Connect before output
+
+AudioConnection_F32 patchCord4Rc(FilterConv,0,Output_i2s,0);
+AudioConnection_F32 patchCord4md(FilterConv,0,Output_i2s,1);
+
+4) Set the filter value when you need - some examples:
+// CW - Centered at 800Hz, ( 40 db x oct ), 2=BPF, width = 1200Hz
+FilterConv.initFilter((float32_t)800, 40, 2, 1200.0);
+
+// SSB - Centered at 1500Hz, ( 60 db x oct ), 2=BPF, width = 3000Hz
+FilterConv.initFilter((float32_t)1500, 60, 2, 3000.0);
+
+Bye.
+Giuseppe Callipo, (IK8YFW)
