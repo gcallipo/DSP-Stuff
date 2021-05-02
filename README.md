@@ -16,14 +16,14 @@ Audio Filter Convolutional F32:
 
    and modified by Giuseppe Callipo-ik8yfw (myself)
    Modifications: 
-    1) Class refactoring, change some methods visibility;
-    2) Filter coefficients calculation included into class;
-    3) Change the class for running in both with F32 
-	   OpenAudio_ArduinoLibrary for Teensy;	
-	4) Added initFilter method for single anf fast initialization and on 
-	   the fly reinititializzation; 
-	5) Optimize it to use as output audio filter on SDR receiver.
-
+	* Class refactoring, change some methods visibility;
+	* Filter coefficients calculation included into class;
+	* Change the class for running in both with F32 
+	  OpenAudio_ArduinoLibrary for Teensy;	
+	* Added initFilter method for single anf fast initialization 
+	  and on the fly reinititializzation; 
+	* Optimize it to use as output audio filter on SDR receiver.
+	
 NOTE:
 All software included in the projects are intended as opensources.
 (Updated on 02.05.2021)
