@@ -19,8 +19,8 @@ AudioFilterConvolution_F32 FilterConv(audio_settings);
 
 3) Connect before output
 
-AudioConnection_F32 patchCord4Rc(FilterConv,0,Output_i2s,0);
-AudioConnection_F32 patchCord4md(FilterConv,0,Output_i2s,1);
+AudioConnection_F32 patchCord1(FilterConv,0,Output_i2s,0);
+AudioConnection_F32 patchCord2(FilterConv,0,Output_i2s,1);
 
 4) Set the filter value when you need - some examples:
 // CW - Centered at 800Hz, ( 40 db x oct ), 2=BPF, width = 1200Hz
