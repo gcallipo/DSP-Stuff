@@ -15,13 +15,13 @@ Audio Filter Convolutional F32:
    https://circuitcellar.com/research-design-hub/fancy-filtering-with-the-teensy-3-6/
 
    and modified by Giuseppe Callipo-ik8yfw (myself)
-   Modifications: 
+   
+#### Modification:
+
 	* Class refactoring, change some methods visibility;
 	* Filter coefficients calculation included into class;
-	* Change the class for running in both with F32 
-	  OpenAudio_ArduinoLibrary for Teensy;	
-	* Added initFilter method for single anf fast initialization 
-	  and on the fly reinititializzation; 
+	* Change the class for running in both with F32  OpenAudio_ArduinoLibrary for Teensy;	
+	* Added initFilter method for single anf fast initialization and on the fly reinititializzation; 
 	* Optimize it to use as output audio filter on SDR receiver.
 	
 NOTE:
