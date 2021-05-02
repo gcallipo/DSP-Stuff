@@ -3,9 +3,9 @@ This project define a space on which to share components, algorithms and exercis
 the world of digital signal analysis, this includes SDR techniques, Audio and Video manipulation, 
 controls etc.
 
-Included Projects:
+#### Modification:
 
-Audio Filter Convolutional F32: 
+* Audio Filter Convolutional F32: 
    
    This is a specific audio signal filtering technique implemented 
    in the frequency domain.
