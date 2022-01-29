@@ -3,9 +3,9 @@ This project define a space on which to share components, algorithms and exercis
 the world of digital signal analysis, this includes SDR techniques, Audio and Video manipulation, 
 controls etc.
 
-#### Included Projects:
-	
-	**Audio Filter Convolutional F32:** 
+**Included Projects:**
+
+#### Audio Filter Convolutional F32:	
 	
 	This is a specific audio signal filtering technique implemented 
 	in the frequency domain.
@@ -23,9 +23,8 @@ controls etc.
 		* Change the class for running in both with F32  OpenAudio_ArduinoLibrary for Teensy;	
 		* Added initFilter method for single anf fast initialization and on the fly reinititializzation; 
 		* Optimize it to use as output audio filter on SDR receiver.
-		
-		
-	**Audio DSP Filter Chain:**
+
+#### Audio DSP Filter Chain:	
 		
 	This is an audio signal filtering combo that included
 	various operation in a single block.
