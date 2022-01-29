@@ -1,0 +1,61 @@
+How to use it.
+
+Create an audio project based on Teensy base Audio Library
+and just add the h and cpp file to your 
+processing chain as unique output filter:
+
+
+************************************************************
+
+1) Include the header into your main.ino project
+#include "RDSP_dsp_chain.h"
+
+2) Define some AudioQueue in your processing audio chain
+AudioRecordQueue         Q_in_L;
+AudioRecordQueue         Q_in_R;
+AudioPlayQueue           Q_out_L;
+AudioPlayQueue           Q_out_R;
+
+3) Connect the queue in your last processing step:
+...
+AudioInputI2S          myAudio_in;
+...
+... myProcessingStep
+...
+AudioOutputI2S         myAudio_out;
+...
+
+// Convolutional path 
+AudioConnection c5(myProcessingStep, 0, Q_in_L, 0);
+AudioConnection c6(myProcessingStep, 1, Q_in_R, 0);
+AudioConnection c7(Q_out_L, 0, myAudio_out, 0);
+AudioConnection c8(Q_out_R, 0, myAudio_out, 1);
+
+4) In the setup() initialize the DSP_Chain as last step.
+
+void setup()
+{
+...
+  
+  DSP_CHAIN_initialize();
+  delay(500);
+}
+
+5) Call the processing into the loop() function
+   and set the nr_level as:
+   0 - Noise reduction disabled
+   1 - Noise reduction enabled
+
+void loop()
+{
+
+  ...
+  
+  // Execute the filter processing block
+  DSP_CHAIN_doProcessing(nr_level, true, 300.0, 4000.0);
+
+}
+
+
+Bye.
+Giuseppe Callipo, (IK8YFW)

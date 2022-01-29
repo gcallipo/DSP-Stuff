@@ -5,7 +5,7 @@ controls etc.
 
 #### Included Projects:
 	
-	Audio Filter Convolutional F32: 
+	**Audio Filter Convolutional F32:** 
 	
 	This is a specific audio signal filtering technique implemented 
 	in the frequency domain.
@@ -25,7 +25,25 @@ controls etc.
 		* Optimize it to use as output audio filter on SDR receiver.
 		
 		
+	**Audio DSP Filter Chain:**
+		
+	This is an audio signal filtering combo that included
+	various operation in a single block.
+	The block works at the sample rate of 44.1kHz and apply 
+	a decimation factor by 4, then the real audio bandwidth is 
+	about 5kHz suitable for SSB and AM station.
+	
+	It allow to execute the following operations:
+	
+	* Spectral Subtraction for Noise Reduction, it works well on ShorthWave Receiver  ( OPERATIVE )
+	* LMS Noise Reduction as alternative technic  ( TO BE ADDED )
+	* BPF Filtering as band pass filtering        ( TO BE ADDED )
+	* and more others will be added 
+		
+	**NOTE**: credits are added into the source files.
+	** This is still work in progress and can be changed. ** 
+		
 #### NOTE:
 
 All software included in the projects are intended as opensources.
-(Updated on 02.05.2021)
+(Updated on 29.01.2022)
