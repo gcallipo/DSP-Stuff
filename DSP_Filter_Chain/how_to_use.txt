@@ -37,7 +37,8 @@ void setup()
 {
 ...
   
-  DSP_CHAIN_initialize();
+  // Initialize the dap chain ( mybe the method name Will be changed )
+  DSP_CHAIN_doConvolutionalInitialize();
   delay(500);
 }
 
