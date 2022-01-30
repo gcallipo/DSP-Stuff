@@ -46,7 +46,9 @@ controls etc.
 
 Tests on receiver RadioDSP Sdr:
 
-              [Spectral subtraction](https://youtu.be/6Mxtmje6WIE)
+       Spectral subtractio  https://youtu.be/6Mxtmje6WIE
+       
+       
 
 
 #### NOTE:
