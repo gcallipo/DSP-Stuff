@@ -24,11 +24,6 @@ controls etc.
 		* Added initFilter method for single anf fast initialization and on the fly reinititializzation; 
 		* Optimize it to use as output audio filter on SDR receiver.
 
-        Tests on receiver RadioDSP Sdr:
-              (Spectral subtraction) 
-              https://youtu.be/6Mxtmje6WIE
-
-
 #### Audio DSP Filter Chain:	
 		
 	This is an audio signal filtering combo that included
@@ -47,6 +42,11 @@ controls etc.
 	**NOTE**: credits are added into the source files.
 	** This is still work in progress and can be changed. ** 
 		
+        Tests on receiver RadioDSP Sdr:
+              (Spectral subtraction) 
+              https://youtu.be/6Mxtmje6WIE
+
+
 #### NOTE:
 
 All software included in the projects are intended as opensources.
