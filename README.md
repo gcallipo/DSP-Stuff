@@ -42,9 +42,11 @@ controls etc.
 	**NOTE**: credits are added into the source files.
 	** This is still work in progress and can be changed. ** 
 		
-        Tests on receiver RadioDSP Sdr:
-              [Spectral subtraction](https://youtu.be/6Mxtmje6WIE)
+        
 
+Tests on receiver RadioDSP Sdr:
+
+              [Spectral subtraction](https://youtu.be/6Mxtmje6WIE)
 
 
 #### NOTE:
