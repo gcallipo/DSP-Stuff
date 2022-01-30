@@ -43,8 +43,8 @@ controls etc.
 	** This is still work in progress and can be changed. ** 
 		
         Tests on receiver RadioDSP Sdr:
-              (Spectral subtraction) 
-              https://youtu.be/6Mxtmje6WIE
+              [Spectral subtraction](https://youtu.be/6Mxtmje6WIE)
+
 
 
 #### NOTE:
