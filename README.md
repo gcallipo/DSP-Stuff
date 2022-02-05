@@ -42,6 +42,15 @@ controls etc.
 	**NOTE**: credits are added into the source files.
 	** This is still work in progress and can be changed. ** 
 		
+        
+
+Tests on receiver RadioDSP Sdr:
+
+       Spectral subtractio  https://youtu.be/6Mxtmje6WIE
+       
+       
+
+
 #### NOTE:
 
 All software included in the projects are intended as opensources.
