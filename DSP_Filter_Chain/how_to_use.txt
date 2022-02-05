@@ -38,7 +38,7 @@ void setup()
 ...
   
   // Initialize the dap chain ( mybe the method name Will be changed )
-  DSP_CHAIN_doConvolutionalInitialize();
+  DSP_CHAIN_initialize();
   delay(500);
 }
 
@@ -53,9 +53,15 @@ void loop()
   ...
   
   // Execute the filter processing block
-  DSP_CHAIN_doProcessing(nr_level, true, 300.0, 4000.0);
+  DSP_CHAIN_doProcessing(nr_level, true, 100.0, 4500.0);
 
 }
+
+
+...
+
+To change the BPF Filter call this function:
+void DSP_CHAIN_applyBFPfilter(double dFLoCut, double dFHiCut);
 
 
 Bye.

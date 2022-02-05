@@ -35,15 +35,13 @@ controls etc.
 	It allow to execute the following operations:
 	
 	* Spectral Subtraction for Noise Reduction, it works well on ShorthWave Receiver  ( OPERATIVE )
+	* BPF Filtering as band pass filtering        ( OPERATIVE )
 	* LMS Noise Reduction as alternative technic  ( TO BE ADDED )
-	* BPF Filtering as band pass filtering        ( TO BE ADDED )
 	* and more others will be added 
 		
 	**NOTE**: credits are added into the source files.
 	** This is still work in progress and can be changed. ** 
-		
-        
-
+	
 Tests on receiver RadioDSP Sdr:
 
        Spectral subtractio  https://youtu.be/6Mxtmje6WIE
@@ -54,4 +52,4 @@ Tests on receiver RadioDSP Sdr:
 #### NOTE:
 
 All software included in the projects are intended as opensources.
-(Updated on 29.01.2022)
+(Updated on 05.02.2022)
