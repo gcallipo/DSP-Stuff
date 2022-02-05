@@ -60,7 +60,7 @@ float32_t FIR_int_coeffs[n_int_taps];
 arm_fir_interpolate_instance_f32 FIR_int;
 float32_t FIR_int_state [n_int_states];
 
-const uint16_t  n_bpf_taps = 100;
+const uint16_t  n_bpf_taps = 101;
 const uint16_t  n_bpf_states = (AUDIO_BLOCK_SAMPLES * N_BLOCKS) + (n_bpf_taps / DF)  -1;
 
 arm_fir_instance_f32 FIR_bpf;
