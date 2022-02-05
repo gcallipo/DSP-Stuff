@@ -16,9 +16,9 @@
 #include "RDSP_dsp_chain_exchange.h"
 #include "RDSP_fir.h"
 #include "RDSP_nr_spectral.h"
+#include "RDSP_dynamicFilters.h"
 
 // TODO: ahh here additional 
-//#include "RDSP_bpf_filter.h"
 //#include "RDSP_nr_nlms.h"
 
 //*************************************************************************************************************
@@ -60,11 +60,18 @@ float32_t FIR_int_coeffs[n_int_taps];
 arm_fir_interpolate_instance_f32 FIR_int;
 float32_t FIR_int_state [n_int_states];
 
+const uint16_t  n_bpf_taps = 100;
+const uint16_t  n_bpf_states = (AUDIO_BLOCK_SAMPLES * N_BLOCKS) + (n_bpf_taps / DF)  -1;
+
+arm_fir_instance_f32 FIR_bpf;
+float32_t FIR_bpf_coeffs[n_bpf_taps];
+float32_t FIR_bpf_state [n_bpf_states];
+
 //*************************************************************************************************************
 //                   EXPORTED FUNCTIONS TO THE MAIN PROGRAM
 //*************************************************************************************************************
-extern void DSP_CHAIN_applyBFPfilter(double dFLoCut, double dFHiCut);
-extern void DSP_CHAIN_doConvolutionalInitialize();
+extern void DSP_CHAIN_applyBFPfilter(double dFLoCut, double dFHiCut);  // Future use
+extern void DSP_CHAIN_initialize();
 extern void DSP_CHAIN_doProcessing(float iNRLevel, boolean bFilterEnabled, double dFLoCut, double dFHiCut);
 //**************************************************************************************************************
 //**************************************************************************************************************
@@ -78,15 +85,18 @@ void DSP_CHAIN_applyBFPfilter(double dFLoCut, double dFHiCut){
 
   AudioNoInterrupts();
 
-  // TO DO: apply here the BPF variable filtering ...
-  //BPF_filterApply(dFLoCut, dFHiCut);
+ 
+  /* Call FIR init function to initialize the instance structure. */
+  audioFilter(FIR_bpf_coeffs, n_bpf_taps, ID_BANDPASS,  W_HAMMING, dFLoCut, dFHiCut, SAMPLE_RATE/DF);
+  arm_fir_init_f32(&FIR_bpf, n_bpf_taps, FIR_bpf_coeffs, FIR_bpf_state, AUDIO_BLOCK_SAMPLES * N_BLOCKS / (uint32_t)DF);
+
 
   AudioInterrupts();
 
 }
 
 // Call this to initialize all the dsp chain
-void DSP_CHAIN_doConvolutionalInitialize(){
+void DSP_CHAIN_initialize(){
 
   // Initialize sub modules
   // Init_LMS_NR(15);   // TODO: Add here the LMS noise reduction
@@ -108,8 +118,11 @@ void DSP_CHAIN_doConvolutionalInitialize(){
   }
 
   // Initialize the filter mask
-  // BPF_initialize(); // TO DO: add here the init of BPF variable filter ...
   
+  /* Call FIR init function to initialize the instance structure. */
+ audioFilter(FIR_bpf_coeffs, n_bpf_taps, ID_BANDPASS,  W_HAMMING, 200.0, 4500.0, SAMPLE_RATE/DF);
+ arm_fir_init_f32(&FIR_bpf, n_bpf_taps, FIR_bpf_coeffs, FIR_bpf_state, AUDIO_BLOCK_SAMPLES * N_BLOCKS / (uint32_t)DF);
+
   /****************************************************************************************
      begin to queue the audio from the audio library
   ****************************************************************************************/
@@ -144,11 +157,6 @@ void DSP_CHAIN_doProcessing(float iNRLevel, boolean bFilterEnabled, double dFLoC
     
     }
 
-    // BPF processing ...
-    if (bFilterEnabled){
-        //BPF_doProcessing(true, dFLoCut, dFHiCut);
-    }
-
     //Decimate the data down before we process
     // in-place does not seem to work for us?, so decimate into R, and copy back to L
     arm_fir_decimate_f32(&FIR_dec, float_buffer_L, float_buffer_R, AUDIO_BLOCK_SAMPLES * N_BLOCKS);
@@ -164,13 +172,20 @@ void DSP_CHAIN_doProcessing(float iNRLevel, boolean bFilterEnabled, double dFLoC
       // the non-float data around for that.
       memcpy(float_buffer_R, float_buffer_L, sizeof(float32_t) * BUFFER_SIZE * N_BLOCKS / (uint32_t)(DF));
     }
+
+    // BPF processing ...
+    if (bFilterEnabled){
+      arm_fir_f32(&FIR_bpf, float_buffer_R, float_buffer_L, (AUDIO_BLOCK_SAMPLES * N_BLOCKS) / (uint32_t)(DF));
+    } else {   //full bypass mode
+      memcpy(float_buffer_L, float_buffer_R, sizeof(float32_t) * BUFFER_SIZE * N_BLOCKS / (uint32_t)(DF));
+    }
  
     //Interpolate the data back up before we play
     // R->L
-    arm_fir_interpolate_f32(&FIR_int, float_buffer_R, float_buffer_L, (AUDIO_BLOCK_SAMPLES * N_BLOCKS) / (uint32_t)(DF));
+    arm_fir_interpolate_f32(&FIR_int, float_buffer_L, float_buffer_R, (AUDIO_BLOCK_SAMPLES * N_BLOCKS) / (uint32_t)(DF));
     //And scale back up after interpolation. Hmm, should we be able to do this scale in the FIR filter itself ?
     //** L -> upscale after decimate -> R **/
-    arm_scale_f32(float_buffer_L, DF, float_buffer_R, AUDIO_BLOCK_SAMPLES * N_BLOCKS);
+    arm_scale_f32(float_buffer_R, DF, float_buffer_L, AUDIO_BLOCK_SAMPLES * N_BLOCKS);
 
    /**********************************************************************
       CONVERT TO INTEGER AND PLAY AUDIO - Push audio into I2S audio chain
@@ -179,8 +194,8 @@ void DSP_CHAIN_doProcessing(float iNRLevel, boolean bFilterEnabled, double dFLoC
     {
       sp_L = Q_out_L.getBuffer();    
       sp_R = Q_out_R.getBuffer();
-      arm_float_to_q15 (&float_buffer_R[AUDIO_BLOCK_SAMPLES * i], sp_L, AUDIO_BLOCK_SAMPLES); 
-      arm_float_to_q15 (&float_buffer_R[AUDIO_BLOCK_SAMPLES * i], sp_R, AUDIO_BLOCK_SAMPLES);
+      arm_float_to_q15 (&float_buffer_L[AUDIO_BLOCK_SAMPLES * i], sp_L, AUDIO_BLOCK_SAMPLES); 
+      arm_float_to_q15 (&float_buffer_L[AUDIO_BLOCK_SAMPLES * i], sp_R, AUDIO_BLOCK_SAMPLES);
       Q_out_L.playBuffer(); // play it !  
       Q_out_R.playBuffer(); // play it !
     }
