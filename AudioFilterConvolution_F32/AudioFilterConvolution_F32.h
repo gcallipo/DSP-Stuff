@@ -1,9 +1,9 @@
 /**
   ******************************************************************************
-  * @file    AudioFilterConvolution_F32.h
+  * @file    AudioFilterConvolution_F32.cpp
   * @author  Giuseppe Callipo - IK8YFW - ik8yfw@libero.it
-  * @version V1.0.0
-  * @date    02-05-2021
+  * @version V2.0.0
+  * @date    06-02-2021
   * @brief   F32 Filter Convolution
   *
   ******************************************************************************
@@ -22,7 +22,9 @@
 	4) Added initFilter method for single anf fast initialization and on 
 	   the fly reinititializzation; 
 	5) Optimize it to use as output audio filter on SDR receiver.
+	6) Optimize the time execution
   *******************************************************************/
+  
 
 #ifndef AudioFilterConvolution_F32_h_
 #define AudioFilterConvolution_F32_h_
@@ -72,7 +74,6 @@ private:
   float32_t tbuffer[2048]__attribute__((aligned(4)));
   float32_t FFT_buffer[2048] __attribute__((aligned(4)));
   float32_t iFFT_buffer[2048] __attribute__((aligned(4)));
-  float32_t float_buffer_L[512]__attribute__((aligned(4)));
   float32_t last_sample_buffer_L[512];
   void impulse(float32_t *coefs);
   float32_t Izero (float32_t x);

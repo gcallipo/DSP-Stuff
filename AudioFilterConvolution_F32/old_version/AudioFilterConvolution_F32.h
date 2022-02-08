@@ -1,9 +1,9 @@
 /**
   ******************************************************************************
-  * @file    AudioFilterConvolution_F32.cpp
+  * @file    AudioFilterConvolution_F32.h
   * @author  Giuseppe Callipo - IK8YFW - ik8yfw@libero.it
-  * @version V2.0.0
-  * @date    06-02-2021
+  * @version V1.0.0
+  * @date    02-05-2021
   * @brief   F32 Filter Convolution
   *
   ******************************************************************************
@@ -22,9 +22,7 @@
 	4) Added initFilter method for single anf fast initialization and on 
 	   the fly reinititializzation; 
 	5) Optimize it to use as output audio filter on SDR receiver.
-	6) Optimize the time execution
   *******************************************************************/
-  
 
 #ifndef AudioFilterConvolution_F32_h_
 #define AudioFilterConvolution_F32_h_

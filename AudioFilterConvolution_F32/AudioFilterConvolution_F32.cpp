@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    AudioFilterConvolution_F32.cpp
   * @author  Giuseppe Callipo - IK8YFW - ik8yfw@libero.it
-  * @version V1.0.0
-  * @date    02-05-2021
+  * @version V2.0.0
+  * @date    06-02-2021
   * @brief   F32 Filter Convolution
   *
   ******************************************************************************
@@ -22,6 +22,7 @@
 	4) Added initFilter method for single anf fast initialization and on 
 	   the fly reinititializzation; 
 	5) Optimize it to use as output audio filter on SDR receiver.
+	6) Optimize the time execution
   *******************************************************************/
   
 #include "AudioFilterConvolution_F32.h"
@@ -38,7 +39,7 @@ void AudioFilterConvolution_F32::passThrough(int stat)
 }
 
 void AudioFilterConvolution_F32::impulse(float32_t *FIR_coef) {
-//	arm_q15_to_float(coefs, FIR_coef, 513); // convert int_buffer to float 32bit
+
 	int k = 0;
 	int i = 0;
 	enabled = 0; // shut off audio stream while impulse is loading
@@ -53,17 +54,19 @@ void AudioFilterConvolution_F32::impulse(float32_t *FIR_coef) {
 		FIR_filter_mask[i] = 0.0;
 	}
 	arm_cfft_f32( &arm_cfft_sR_f32_len1024, FIR_filter_mask, 0, 1);
-	for (int i = 0; i < 1024; i++) {
-	//	Serial.println(FIR_filter_mask[i] * 32768);
-	}
+	
 	// for 1st time thru, zero out the last sample buffer to 0
-	memset(last_sample_buffer_L, 0, sizeof(last_sample_buffer_L));
+    arm_fill_f32(0, last_sample_buffer_L, BUFFER_SIZE *4);
+  
 	state = 0;
 	enabled = 1;  //enable audio stream again
 }
 
 void AudioFilterConvolution_F32::update(void)
 {
+	// For debug only
+    // uint32_t nn= micros();
+  
 	audio_block_f32_t *block;
 	float32_t *bp;
 
@@ -72,90 +75,100 @@ void AudioFilterConvolution_F32::update(void)
 	if (block) {
 		switch (state) {
 		case 0:
-			bp = block->data;
-			for (int i = 0; i < AUDIO_BLOCK_SAMPLES; i++) {
-				buffer[i] = *bp++;
+   
+			if (passThru ==0) {
+			
+				arm_cmplx_mult_cmplx_f32(FFT_buffer, FIR_filter_mask, iFFT_buffer, FFT_length);   // complex multiplication in Freq domain = convolution in time domain
+				arm_cfft_f32(&arm_cfft_sR_f32_len1024, iFFT_buffer, 1, 1);  // perform complex inverse FFT
+				k = 0;
+				l = 1024;
+				
+				for (int i = 0; i < 512; i++) {
+				  buffer[i] = last_sample_buffer_L[i] + iFFT_buffer[k++];   // this performs the "ADD" in overlap/Add
+				  last_sample_buffer_L[i] = iFFT_buffer[l++];       // this saves 512 samples (overlap) for next time around
+				  k++;
+				  l++;
+				}
 			}
+			
+			// save datas for output temporary array tbuffer
+			arm_copy_f32 (&buffer[0], &tbuffer[0], BUFFER_SIZE*4);
+       
 			bp = block->data;
+     
 			for (int i = 0; i < AUDIO_BLOCK_SAMPLES; i++) {
-				*bp++ = tbuffer[i];   // tbuffer contains results of last FFT/multiply/iFFT processing (convolution filtering)
+				buffer[i] = *bp;
+                *bp++ = tbuffer[i];
 			}
+			
 			AudioStream_F32::transmit(block);
 			AudioStream_F32::release(block);
 			state = 1;
 			break;
+      
 		case 1:
 			bp = block->data;
+     
 			for (int i = 0; i < AUDIO_BLOCK_SAMPLES; i++) {
-				buffer[128+i] = *bp++;
+				buffer[128+i] = *bp;
+                *bp++ = tbuffer[i+128];
 			}
-			bp = block->data;
-			for (int i = 0; i < AUDIO_BLOCK_SAMPLES; i++) {
-				*bp++ = tbuffer[i+128]; // tbuffer contains results of last FFT/multiply/iFFT processing (convolution filtering)
-			}
+		
 			AudioStream_F32::transmit(block);
 			AudioStream_F32::release(block);
 			state = 2;
 			break;
+      
 		case 2:
 			bp = block->data;
+     
 			for (int i = 0; i < AUDIO_BLOCK_SAMPLES; i++) {
-				buffer[256 + i] = *bp++;
+				buffer[256 + i] = *bp;
+                *bp++ = tbuffer[i+256];  // tbuffer contains results of last FFT/multiply/iFFT processing (convolution filtering)
 			}
-			bp = block->data;
-			for (int i = 0; i < AUDIO_BLOCK_SAMPLES; i++) {
-				*bp++ = tbuffer[i+256];  // tbuffer contains results of last FFT/multiply/iFFT processing (convolution filtering)
-			}
+		 
 			AudioStream_F32::transmit(block);
 			AudioStream_F32::release(block);
+
+             // zero pad last half of array- necessary to prevent aliasing in FFT
+             arm_fill_f32(0, FFT_buffer + 1024, FFT_length);
+      
 			state = 3;
 			break;
+      
 		case 3:
+   
 			bp = block->data;
 			for (int i = 0; i < AUDIO_BLOCK_SAMPLES; i++) {
-				buffer[384 + i] = *bp++;
+				buffer[384 + i] = *bp;
+                *bp++ = tbuffer[i + 384];  // tbuffer contains results of last FFT/multiply/iFFT processing (convolution filtering)
 			}
-			bp = block->data;
-			for (int i = 0; i < AUDIO_BLOCK_SAMPLES; i++) {
-				*bp++ = tbuffer[i + 384];  // tbuffer contains results of last FFT/multiply/iFFT processing (convolution filtering)
-			}
+
 			AudioStream_F32::transmit(block);
 			AudioStream_F32::release(block);
 			state = 0;
 			// 4 blocks are in- now do the FFT1024,complex multiply and iFFT1024  on 512samples of data
 			// using the overlap/add method
-			// 1st convert Q15 samples to float
-			//arm_q15_to_float(buffer, float_buffer_L, 512); 
-      arm_copy_f32 (buffer, float_buffer_L, 512); 
-		   // float_buffer samples are now standardized from > -1.0 to < 1.0
 			if (passThru ==0) {
-				memset(FFT_buffer + 1024, 0, sizeof(FFT_buffer) / 2);    // zero pad last half of array- necessary to prevent aliasing in FFT
-				//fill FFT_buffer with current audio samples
+      
+			    //fill FFT_buffer with current audio samples
 				k = 0;
 				for (i = 0; i < 512; i++)
 				{
-					FFT_buffer[k++] = float_buffer_L[i];   // real
-					FFT_buffer[k++] = float_buffer_L[i];   // imag
+					FFT_buffer[k++] = buffer[i];   // real
+					FFT_buffer[k++] = buffer[i];   // imag
 				}
-				// calculations are performed in-place in FFT routines
-				arm_cfft_f32(&arm_cfft_sR_f32_len1024, FFT_buffer, 0, 1);// perform complex FFT
-				arm_cmplx_mult_cmplx_f32(FFT_buffer, FIR_filter_mask, iFFT_buffer, FFT_length);   // complex multiplication in Freq domain = convolution in time domain
-				arm_cfft_f32(&arm_cfft_sR_f32_len1024, iFFT_buffer, 1, 1);  // perform complex inverse FFT
-				k = 0;
-				l = 1024;
-				for (int i = 0; i < 512; i++) {
-					float_buffer_L[i] = last_sample_buffer_L[i] + iFFT_buffer[k++];   // this performs the "ADD" in overlap/Add
-					last_sample_buffer_L[i] = iFFT_buffer[l++];				// this saves 512 samples (overlap) for next time around
-					k++;
-					l++;
-				}
-			} //end if passTHru
-			// convert floats to Q15 and save in temporary array tbuffer
-			//arm_float_to_q15(&float_buffer_L[0], &tbuffer[0], BUFFER_SIZE*4);
-      arm_copy_f32 (&float_buffer_L[0], &tbuffer[0], BUFFER_SIZE*4); 
+
+                 // calculations are performed in-place in FFT routines
+                 arm_cfft_f32(&arm_cfft_sR_f32_len1024, FFT_buffer, 0, 1);// perform complex FFT
+        
+             } //end if passTHru
+
 			break;
 		}
 	}
+	// For debug only
+	// Serial.println(micros()-nn);
 }
 
 

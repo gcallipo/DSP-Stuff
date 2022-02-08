@@ -23,6 +23,7 @@ controls etc.
 		* Change the class for running in both with F32  OpenAudio_ArduinoLibrary for Teensy;	
 		* Added initFilter method for single anf fast initialization and on the fly reinititializzation; 
 		* Optimize it to use as output audio filter on SDR receiver.
+		* Optimize execution time
 
 #### Audio DSP Filter Chain:	
 		
@@ -52,4 +53,4 @@ Tests on receiver RadioDSP Sdr:
 #### NOTE:
 
 All software included in the projects are intended as opensources.
-(Updated on 05.02.2022)
+(Updated on 08.02.2022)
