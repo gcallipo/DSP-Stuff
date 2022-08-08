@@ -47,10 +47,18 @@ Tests on receiver RadioDSP Sdr:
 
        Spectral subtractio  https://youtu.be/6Mxtmje6WIE
        
-       
-
+ #### HF PRE Selector schematic:	
+		
+	This is a schematic written on Kicad free software
+	to build a good HF filter reception frontend for 
+	any Short Wave Radio Receiver. Inside the project
+	you can find also a PDF version of schematic.
+	I use two cheap multiplexer modules and some passive
+	components to define each filter band. 
+	It was successfully tested with the Radio DSP SDR Receiver
+	
 
 #### NOTE:
 
-All software included in the projects are intended as opensources.
-(Updated on 08.02.2022)
+All software and hw schematics included in the projects are intended as opensources.
+(Updated on 08.08.2022)
