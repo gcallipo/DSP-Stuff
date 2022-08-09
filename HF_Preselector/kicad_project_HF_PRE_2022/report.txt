@@ -1,0 +1,71 @@
+Info: Processing component "R1:/6248750F:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical".
+Info: Processing component "C28:/622FAE2F:Capacitor_THT:C_Rect_L7.0mm_W2.0mm_P5.00mm".
+Info: Processing component "L1:/623348B0:Inductor_THT:L_Axial_L5.3mm_D2.2mm_P2.54mm_Vertical_Vishay_IM-1".
+Info: Processing component "L2:/62335445:Inductor_THT:L_Axial_L5.3mm_D2.2mm_P2.54mm_Vertical_Vishay_IM-1".
+Info: Processing component "L3:/62334E2A:Inductor_THT:L_Axial_L5.3mm_D2.2mm_P2.54mm_Vertical_Vishay_IM-1".
+Info: Processing component "L4:/622F8E77:Inductor_THT:L_Axial_L5.3mm_D2.2mm_P2.54mm_Vertical_Vishay_IM-1".
+Info: Processing component "L5:/622F8E83:Inductor_THT:L_Axial_L5.3mm_D2.2mm_P2.54mm_Vertical_Vishay_IM-1".
+Info: Processing component "L6:/622F8E7D:Inductor_THT:L_Axial_L5.3mm_D2.2mm_P2.54mm_Vertical_Vishay_IM-1".
+Info: Processing component "L7:/622FA8CF:Inductor_THT:L_Axial_L5.3mm_D2.2mm_P2.54mm_Vertical_Vishay_IM-1".
+Info: Processing component "L8:/622FA8DB:Inductor_THT:L_Axial_L5.3mm_D2.2mm_P2.54mm_Vertical_Vishay_IM-1".
+Info: Processing component "L9:/622FA8D5:Inductor_THT:L_Axial_L5.3mm_D2.2mm_P2.54mm_Vertical_Vishay_IM-1".
+Info: Processing component "L10:/622FFC02:Inductor_THT:L_Axial_L5.3mm_D2.2mm_P2.54mm_Vertical_Vishay_IM-1".
+Info: Processing component "L11:/622FFC0E:Inductor_THT:L_Axial_L5.3mm_D2.2mm_P2.54mm_Vertical_Vishay_IM-1".
+Info: Processing component "L12:/622FFC08:Inductor_THT:L_Axial_L5.3mm_D2.2mm_P2.54mm_Vertical_Vishay_IM-1".
+Info: Processing component "C2:/624874F7:Capacitor_THT:C_Rect_L7.0mm_W2.0mm_P5.00mm".
+Info: Processing component "R2:/62487509:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical".
+Info: Processing component "R3:/62487515:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical".
+Info: Processing component "R4:/62550A52:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical".
+Info: Processing component "R5:/624EDC6D:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical".
+Info: Processing component "R6:/622FAE4D:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical".
+Info: Processing component "R7:/622FAE41:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical".
+Info: Processing component "R8:/622FAE47:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical".
+Info: Processing component "R9:/623C1F1F:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical".
+Info: Processing component "R10:/623C19BA:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical".
+Info: Processing component "R11:/623C1241:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical".
+Info: Processing component "SW1:/624264A2:".
+Info: Processing component "U1:/622D14F8:Package_SO:SOP-16_4.55x10.3mm_P1.27mm".
+Info: Processing component "U2:/622FAE29:Package_SO:SOP-16_4.55x10.3mm_P1.27mm".
+Info: Processing component "C27:/622FAE3B:Capacitor_THT:C_Rect_L7.0mm_W2.0mm_P5.00mm".
+Info: Processing component "C1:/62487503:Capacitor_THT:C_Rect_L7.0mm_W2.0mm_P5.00mm".
+Info: Processing component "C3:/624874FD:Capacitor_THT:C_Rect_L7.0mm_W2.0mm_P5.00mm".
+Info: Processing component "C4:/62327C88:Capacitor_THT:C_Rect_L7.0mm_W2.0mm_P5.00mm".
+Info: Processing component "C5:/6232EC8E:Capacitor_THT:C_Disc_D4.3mm_W1.9mm_P5.00mm".
+Info: Processing component "C6:/62329CB9:Capacitor_THT:C_Disc_D4.3mm_W1.9mm_P5.00mm".
+Info: Processing component "C7:/6232A9A1:Capacitor_THT:C_Disc_D4.3mm_W1.9mm_P5.00mm".
+Info: Processing component "C8:/6232AEBB:Capacitor_THT:C_Rect_L7.0mm_W2.0mm_P5.00mm".
+Info: Processing component "C9:/622F8E59:Capacitor_THT:C_Rect_L7.0mm_W2.0mm_P5.00mm".
+Info: Processing component "C10:/622F8E5F:Capacitor_THT:C_Disc_D4.3mm_W1.9mm_P5.00mm".
+Info: Processing component "C11:/622F8E71:Capacitor_THT:C_Disc_D4.3mm_W1.9mm_P5.00mm".
+Info: Processing component "C12:/622F8E65:Capacitor_THT:C_Disc_D4.3mm_W1.9mm_P5.00mm".
+Info: Processing component "C13:/622F8E6B:Capacitor_THT:C_Rect_L7.0mm_W2.0mm_P5.00mm".
+Info: Processing component "C14:/622FA8B1:Capacitor_THT:C_Rect_L7.0mm_W2.0mm_P5.00mm".
+Info: Processing component "C16:/622FA8C9:Capacitor_THT:C_Disc_D4.3mm_W1.9mm_P5.00mm".
+Info: Processing component "C26:/622FAE35:Capacitor_THT:C_Rect_L7.0mm_W2.0mm_P5.00mm".
+Info: Processing component "C25:/6244180B:Capacitor_THT:C_Rect_L7.0mm_W2.0mm_P5.00mm".
+Info: Processing component "C24:/6236E849:Capacitor_THT:C_Rect_L7.0mm_W2.0mm_P5.00mm".
+Info: Processing component "C23:/622FFBF6:Capacitor_THT:C_Rect_L7.0mm_W2.0mm_P5.00mm".
+Info: Processing component "C22:/622FFBF0:Capacitor_THT:C_Disc_D4.3mm_W1.9mm_P5.00mm".
+Info: Processing component "C21:/622FFBFC:Capacitor_THT:C_Disc_D4.3mm_W1.9mm_P5.00mm".
+Info: Processing component "C20:/622FFBEA:Capacitor_THT:C_Disc_D4.3mm_W1.9mm_P5.00mm".
+Info: Processing component "C19:/622FFBE4:Capacitor_THT:C_Rect_L7.0mm_W2.0mm_P5.00mm".
+Info: Processing component "C18:/622FA8C3:Capacitor_THT:C_Rect_L7.0mm_W2.0mm_P5.00mm".
+Info: Processing component "C17:/622FA8BD:Capacitor_THT:C_Disc_D4.3mm_W1.9mm_P5.00mm".
+Info: Processing component "C15:/622FA8B7:Capacitor_THT:C_Disc_D4.3mm_W1.9mm_P5.00mm".
+Remove single pad net Net-(U2-Pad4).
+Remove single pad net Net-(U2-Pad2).
+Remove single pad net Net-(U1-Pad5).
+Remove single pad net Net-(U1-Pad4).
+Remove single pad net Net-(U1-Pad2).
+Remove single pad net Net-(U2-Pad5).
+Remove single pad net Net-(C26-Pad2).
+Remove single pad net FROM_ANTENNA.
+Connect U2 pin 5 to Net-(U2-Pad5).
+Connect U2 pin 4 to Net-(U2-Pad4).
+Connect U2 pin 2 to Net-(U2-Pad2).
+Connect U1 pin 2 to Net-(U1-Pad2).
+Connect U1 pin 4 to Net-(U1-Pad4).
+Connect U1 pin 5 to Net-(U1-Pad5).
+Connect C3 pin 1 to FROM_ANTENNA.
+Connect C26 pin 2 to Net-(C26-Pad2).
+Error: Cannot add SW1 (no footprint assigned).
